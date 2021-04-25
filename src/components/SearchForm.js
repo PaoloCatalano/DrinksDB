@@ -2,7 +2,7 @@ import React from "react";
 import { useGlobalContext } from "../context";
 
 const SearchForm = () => {
-  const { setSearchTerm } = useGlobalContext();
+  const { searchTerm, setSearchTerm } = useGlobalContext();
   const searchValue = React.useRef("");
 
   const searchCocktail = () => {
@@ -10,8 +10,8 @@ const SearchForm = () => {
   };
 
   React.useEffect(() => {
-    searchValue.current.focus();
-  });
+    searchValue.current.value = searchTerm;
+  }, [searchTerm]);
 
   return (
     <section className="section search">

@@ -2,11 +2,14 @@ import React, { useState, useContext, useEffect } from "react";
 import { useCallback } from "react";
 
 const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
+const urlFilter = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=";
+const urlNON =
+  "https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic";
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("a");
+  const [searchTerm, setSearchTerm] = useState("");
   const [cocktails, setCocktails] = useState([]);
 
   /* fetching selected cocktails */
@@ -18,6 +21,7 @@ const AppProvider = ({ children }) => {
       const response = await fetch(`${url}${searchTerm}`);
       const data = await response.json();
       const { drinks } = data;
+      console.log(data);
       if (drinks) {
         const newCocktails = drinks.map((item) => {
           const {
@@ -54,6 +58,7 @@ const AppProvider = ({ children }) => {
         loading,
         setSearchTerm,
         cocktails,
+        searchTerm,
       }}
     >
       {children}
