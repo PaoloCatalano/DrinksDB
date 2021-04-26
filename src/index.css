@@ -159,6 +159,18 @@ Buttons
   padding: 0;
   width: 3rem;
   height: 3rem;
+  animation: light 5s infinite ease-in-out;
+}
+@keyframes light {
+  0% {
+    background: radial-gradient(
+      rgba(255, 253, 131, 0.5) 10%,
+      var(--mainWhite) 30%
+    );
+  }
+  10% {
+    background: inherit;
+  }
 }
 .btn-bulb:hover {
   background: radial-gradient(
@@ -320,16 +332,21 @@ Form
 }
 
 .search-form {
+  display: grid;
+  place-items: center;
   width: var(--smallWidth);
   margin: 0 auto;
-  max-width: var(--maxWidth);
+  /* max-width: var(--maxWidth); */
+  max-width: 30rem;
   background: var(--mainWhite);
   padding: 2rem 2.5rem;
   text-transform: capitalize;
   border-radius: var(--mainBorderRadius);
   box-shadow: var(--lightShadow);
 }
-
+.form-control {
+  text-align: center;
+}
 .form-control label {
   display: block;
   margin-bottom: 1.25rem;
@@ -346,6 +363,18 @@ Form
   padding: 0.5rem;
   font-size: 1.2rem;
   color: var(--primaryLightColor);
+}
+select {
+  display: flex !important;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+.link {
+  margin: 0 auto;
+  margin-top: 1rem;
+  font-weight: bold;
+  text-align: center;
 }
 /* 
 ====== 

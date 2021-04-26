@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logoDark from "../DrinksDB dark.png";
-import logoLight from "../DrinksDB.png";
+import logoDark from "../DrinkDB.png";
+import logoLight from "../DrinkDBwhite.png";
 import { FaRegLightbulb } from "react-icons/fa";
 const Navbar = ({ toggle, theme }) => {
   return (

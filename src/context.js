@@ -1,17 +1,20 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useCallback } from "react";
 
-const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
-const urlFilter = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=";
-const urlNON =
+const urlSearch = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
+const urlNonAlcoholic =
   "https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic";
+const urlFilter = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=";
+
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [cocktails, setCocktails] = useState([]);
-
+  const [url, setUrl] = useState(urlSearch);
+  const [isError, setIsError] = useState(false);
+  const [isIngredient, setIsIngredient] = useState(false);
   /* fetching selected cocktails */
   //per evitare il warning: React Hook useEffect has a missing dependency: 'fetchDrinks'. Either include it or remove the dependency array  react-hooks/exhaustive-deps,
   // si aggiunge useCallback (solo se cambia qualcosa nella funzione[searchTerm], allora ricrea la funzione!)
@@ -21,7 +24,6 @@ const AppProvider = ({ children }) => {
       const response = await fetch(`${url}${searchTerm}`);
       const data = await response.json();
       const { drinks } = data;
-      console.log(data);
       if (drinks) {
         const newCocktails = drinks.map((item) => {
           const {
@@ -43,12 +45,15 @@ const AppProvider = ({ children }) => {
       } else {
         setCocktails([]);
       }
+      setIsError(false);
+
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      setIsError(true);
+      console.log("error >> " + error);
       setLoading(false);
     }
-  }, [searchTerm]);
+  }, [searchTerm, url]);
   useEffect(() => {
     fetchDrinks();
   }, [searchTerm, fetchDrinks]);
@@ -59,6 +64,14 @@ const AppProvider = ({ children }) => {
         setSearchTerm,
         cocktails,
         searchTerm,
+        setUrl,
+        isError,
+        urlSearch,
+        urlNonAlcoholic,
+        isIngredient,
+        setIsIngredient,
+        urlFilter,
+        url,
       }}
     >
       {children}
