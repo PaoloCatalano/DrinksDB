@@ -4,11 +4,14 @@ import { Link } from "react-router-dom";
 
 const SearchForm = () => {
   const {
+    cocktails,
     searchTerm,
     setSearchTerm,
     isError,
     setIsIngredient,
+    isIngredient,
   } = useGlobalContext();
+
   const searchValue = React.useRef("");
   const select = React.useRef("");
 
@@ -30,6 +33,11 @@ const SearchForm = () => {
     searchValue.current.value = searchTerm;
   }, [searchTerm]);
 
+  React.useEffect(() => {
+    select.current.options[0].defaultSelected = !isIngredient; //search by name
+    select.current.options[1].defaultSelected = isIngredient; //search by ingredient
+  }, [isIngredient]);
+
   return (
     <section className="section search">
       <form
@@ -46,9 +54,7 @@ const SearchForm = () => {
             ref={select}
             className="btn"
           >
-            <option value="name" defaultValue>
-              name
-            </option>
+            <option value="name">name</option>
             <option value="ingredient">main ingredient</option>
           </select>
           <input
@@ -57,13 +63,16 @@ const SearchForm = () => {
             ref={searchValue}
             onChange={searchCocktail}
           />
-          {isError && <p>value not found!</p>}
+          {isError ? (
+            <p>value not found!</p>
+          ) : (
+            <p>{cocktails.length} cocktails found! </p>
+          )}
         </div>
         <Link
           to="/non-alcoholic-list"
           className="btn link"
           onClick={() => {
-            setIsIngredient(false);
             setSearchTerm("");
           }}
         >

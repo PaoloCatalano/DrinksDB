@@ -17,16 +17,10 @@ const CocktailList = ({ noAlc }) => {
   useEffect(() => {
     setUrl(() => {
       if (noAlc) {
-        console.log("urlNonAlcoholic", urlNonAlcoholic);
-
         return urlNonAlcoholic;
       } else if (isIngredient) {
-        console.log("urlFilter", urlFilter);
-
         return urlFilter;
       } else {
-        console.log("urlSearch", urlSearch);
-
         return urlSearch;
       }
     });
